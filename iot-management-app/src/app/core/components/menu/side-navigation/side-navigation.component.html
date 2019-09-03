@@ -1,0 +1,18 @@
+<nav class="navbar-default navbar-static-side menu-animation animated slideInLeft" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <h1 class="logo-title">IoT Management</h1>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="text-muted text-xs block">{{username}}<b class="caret"></b></span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li (click)="logout()"><a class="dropdown-item">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">IoT</div>
+            </li>
+        </ul>
+    </div>
+</nav>
