@@ -27,7 +27,7 @@ export class SideNavigationComponent implements OnInit {
   checkPermission(): boolean {
     const token = localStorage.getItem('currentUserToken');
     const tokenPayload: any = decode(token);
-    const role = tokenPayload.userAuthRole;
+    const role = tokenPayload.userRole;
     return role === 'admin' ? true : false;
   }
 

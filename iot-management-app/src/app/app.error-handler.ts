@@ -8,7 +8,10 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     constructor(private notifier: NotificationService) { }
 
-    handleError(error: Error | HttpErrorResponse) {
+    handleError(error: any) {
+        while (error.rejection) {
+            error = error.rejection;
+        }
         let errorMessage = '';
         if (error instanceof HttpErrorResponse) {
             // Server Error

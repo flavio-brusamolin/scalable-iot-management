@@ -23,8 +23,8 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  login(user: any): Observable<any> {
-    return this.http.post(this.url, user);
+  login(user: any): Promise<any> {
+    return this.http.post(this.url, user).toPromise();
   }
 
   logout(): void {

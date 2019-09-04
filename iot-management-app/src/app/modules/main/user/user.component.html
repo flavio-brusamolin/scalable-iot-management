@@ -1,0 +1,33 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox">
+        <div class="ibox-title">
+          <h5>Users</h5>
+        </div>
+        <div class="ibox-content" *ngIf="users?.length">
+          <div class="table-responsive">
+            <table class="table table-striped text-center">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users, let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{user.name}}</td>
+                  <td>{{user.user}}</td>
+                  <td>{{user.role == 'admin' ? 'Administrator' : 'User'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,14 +27,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(user: any): void {
-    this.authService.login(user).subscribe(
-      (res: any) => {
-        localStorage.setItem('currentUserToken', res.token);
-        localStorage.setItem('currentUserName', res.username);
-        this.notifier.showSuccess('Bem-vindo!', 'Login realizado com sucesso');
-        this.router.navigate(['']);
-      });
+  async login(user: any) {
+    const response = await this.authService.login(user);
+    localStorage.setItem('currentUserToken', response.token);
+    localStorage.setItem('currentUserName', response.username);
+    this.notifier.showSuccess('Bem-vindo!', 'Login realizado com sucesso');
+    this.router.navigate(['/users']);
   }
 
 }

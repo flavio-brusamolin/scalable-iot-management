@@ -13,6 +13,9 @@
                 </div>
                 <div class="logo-element">IoT</div>
             </li>
+            <li [ngClass]="{active: activeRoute('/users')}" *ngIf="isAdmin">
+                <a [routerLink]="['/users']"><i class="fa fa-users"></i><span class="nav-label">Users</span></a>
+            </li>
         </ul>
     </div>
 </nav>
