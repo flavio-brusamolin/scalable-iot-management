@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { API } from 'src/app/app.api';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -14,6 +13,11 @@ export class UserService {
     listUsers(): Promise<any> {
         const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
         return this.http.get(this.url, { headers: header }).toPromise();
+    }
+
+    removeUser(userId: string): Promise<any> {
+        const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
+        return this.http.delete(`${this.url}/${userId}`, { headers: header }).toPromise();
     }
 
 }
