@@ -27,7 +27,8 @@
                     <button class="btn btn-outline btn-success btn-xs" type="button">
                       <i class="fa fa-pencil"></i>
                     </button>
-                    <button class="btn btn-outline btn-danger btn-xs m-l" type="button" (click)="removeUser(user._id)">
+                    <button class="btn btn-outline btn-danger btn-xs m-l" type="button" (click)="actionedUser=user"
+                      data-toggle="modal" data-target="#removeModal">
                       <i class="fa fa-times"></i>
                     </button>
                   </td>
@@ -37,9 +38,68 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-primary btn-circle float-right" type="button">
+      <button class="btn btn-outline btn-primary btn-circle float-right" type="button" data-toggle="modal"
+        data-target="#addModal">
         <i class="fa fa-plus"></i>
       </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade inmodal" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated bounceInRight">
+      <div class="modal-header">
+        <i class="fa fa-plus-circle modal-icon"></i>
+        <h4 class="modal-title">Add user</h4>
+        <small class="font-bold">Users added will have access to system resources according to their role.</small>
+      </div>
+      <form role="form" [formGroup]="addForm" (ngSubmit)="storeUser(addForm.value)">
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group col-lg-6 col-sm-6">
+              <label>Name</label>
+              <input type="text" class="form-control" formControlName="name" placeholder="Insert name">
+            </div>
+            <div class="form-group col-lg-6 col-sm-6">
+              <label>Username</label>
+              <input type="text" class="form-control" formControlName="user" placeholder="Insert username">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-6 col-sm-6">
+              <label>Password</label>
+              <input type="password" class="form-control" formControlName="password" placeholder="Insert password">
+            </div>
+            <div class="col-lg-6 col-sm-6 role-check">
+              <label><input type="checkbox" class="i-checks" id="addCheck"> Administrator</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+          <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade inmodal" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+      <div class="modal-header">
+        <i class="fa fa-times-circle-o modal-icon"></i>
+        <h4 class="modal-title">Remove user</h4>
+        <small class="font-bold">Confirming, user will be removed from system.</small>
+      </div>
+      <div class="modal-body">
+        <label>Do you want to remove <strong>{{actionedUser.name}}</strong>?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" (click)="removeUser()">Yes</button>
+      </div>
     </div>
   </div>
 </div>

@@ -31,7 +31,8 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/metismenu/dist/metisMenu.js",
               "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
-              "src/assets/js/inspinia.js"
+              "src/assets/js/inspinia.js",
+              "src/assets/js/plugins/iCheck/icheck.min.js"
             ],
             "es5BrowserSupport": true
           },

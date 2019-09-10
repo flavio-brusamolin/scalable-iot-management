@@ -15,6 +15,11 @@ export class UserService {
         return this.http.get(this.url, { headers: header }).toPromise();
     }
 
+    storeUser(user: any): Promise<any> {
+        const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
+        return this.http.post(this.url, user, { headers: header }).toPromise();
+    }
+
     removeUser(userId: string): Promise<any> {
         const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
         return this.http.delete(`${this.url}/${userId}`, { headers: header }).toPromise();
