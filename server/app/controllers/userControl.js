@@ -6,7 +6,7 @@ const auth = require('../middlewares/auth');
 
 const createUser = async (req, res) => {
     const user = req.body;
-    user.password = crypto.encrypt(user.password);
+    if (user.password) user.password = crypto.encrypt(user.password);
     try {
         await userDAO.createUser(user);
         res.status(201).json({ success: true, message: 'Usuário cadastrado com sucesso' });
@@ -48,7 +48,7 @@ const removeUser = async (req, res) => {
 
 const authenticateUser = async (req, res) => {
     const { user, password } = req.body;
-    const encryptedPassword = crypto.encrypt(password);
+    const encryptedPassword = password ? crypto.encrypt(password) : password;
     try {
         const authUser = await userDAO.authenticateUser(user, encryptedPassword);
         const token = auth.generateToken(authUser._id, authUser.role);

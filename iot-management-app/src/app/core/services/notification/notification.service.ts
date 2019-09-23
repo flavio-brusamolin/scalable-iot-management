@@ -13,7 +13,9 @@ export class NotificationService {
   }
 
   showError(title: string, body: string): void {
-    this.toastr.error(body, title);
+    this.toastr.error(body, title, {
+      onActivateTick: true
+    });
   }
 
 }
