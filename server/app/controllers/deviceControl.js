@@ -5,7 +5,7 @@ const mqttManagament = require('../mqtt/mqttManagement');
 const createDevice = async (req, res) => {
     const device = req.body;
     try {
-        device.isConnected = await mqttManagament.verifyDeviceConnection(device.topic);
+        if (device.topic) device.isConnected = await mqttManagament.verifyDeviceConnection(device.topic);
         await deviceDAO.createDevice(device);
         res.status(201).json({ success: true, message: 'Dispositivo cadastrado com sucesso' });
     } catch (error) {

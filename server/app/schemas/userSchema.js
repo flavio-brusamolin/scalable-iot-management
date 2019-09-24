@@ -7,21 +7,24 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: [true, 'Nome obrigatório']
     },
     user: {
         type: String,
-        required: true,
+        required: [true, 'Login de acesso obrigatório'],
         unique: true
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'Senha obrigatória']
     },
     role: {
         type: String,
-        required: true,
-        enum: ['admin', 'user']
+        required: [true, 'Perfil obrigatório'],
+        enum: {
+            values: ['admin', 'user'],
+            message: "Perfil do usuário deve ser 'admin' ou 'user'"
+        }
     }
 });
 

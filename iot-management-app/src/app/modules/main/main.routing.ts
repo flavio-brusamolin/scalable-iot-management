@@ -9,7 +9,8 @@ const mainRoutes: Routes = [
   {
     path: '', component: MainComponent,
     children: [
-      { path: '', redirectTo: 'users', pathMatch: 'full' },
+      { path: '', redirectTo: 'devices-network', pathMatch: 'full' },
+      { path: 'devices-network', loadChildren: () => import('./devices-network/devices-network.module').then(m => m.DevicesNetworkModule) },
       {
         path: 'users', loadChildren: () => import('./user/user.module').then(m => m.UserModule),
         canActivate: [RoleGuard],

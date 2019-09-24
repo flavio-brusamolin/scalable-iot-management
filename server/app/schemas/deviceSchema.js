@@ -7,12 +7,12 @@ const Schema = mongoose.Schema;
 const deviceSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, 'Nome do dispositivo obrigatório'],
         unique: true
     },
     type: {
         type: String,
-        required: true
+        required: [true, 'Tipo do dispositivo obrigatório']
     },
     isConnected: {
         type: Boolean,
@@ -20,16 +20,16 @@ const deviceSchema = new Schema({
     },
     topic: {
         type: String,
-        required: true,
+        required: [true, 'Tópico do dispositivo obrigatório'],
         unique: true
     },
     turnOn: {
         type: String,
-        required: true
+        required: [true, 'Forma de acionamento obrigatória']
     },
     turnOff: {
         type: String,
-        required: true
+        required: [true, 'Forma de desligamento obrigatória']
     },
     data: [String]
 });

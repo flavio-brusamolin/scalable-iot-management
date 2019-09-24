@@ -15,9 +15,11 @@ export class UserComponent implements OnInit {
 
   users: any = [];
   actionedUser: any = {};
+
   userRole = 'user';
 
   addForm: FormGroup;
+  editForm: FormGroup;
 
   constructor(private userService: UserService, private notifier: NotificationService, private formBuilder: FormBuilder) { }
 
@@ -28,7 +30,12 @@ export class UserComponent implements OnInit {
   }
 
   initializateForms() {
-    this.addForm = this.formBuilder.group({
+    this.addForm = this.formTemplate();
+    this.editForm = this.formTemplate();
+  }
+
+  formTemplate() {
+    return this.formBuilder.group({
       name: this.formBuilder.control('', [Validators.required]),
       user: this.formBuilder.control('', [Validators.required]),
       password: this.formBuilder.control('', [Validators.required])
@@ -57,6 +64,21 @@ export class UserComponent implements OnInit {
     this.afterRequest(message, '#addModal');
     this.addForm.reset();
     $('#addCheck').iCheck('uncheck');
+    this.userRole = 'user';
+  }
+
+  prepareEdition(user: any) {
+    this.editForm.controls.name.setValue(user.name);
+    this.editForm.controls.user.setValue(user.user);
+    this.editForm.controls.password.setValue('');
+    user.role === 'admin' ? $('#editCheck').iCheck('check') : $('#editCheck').iCheck('uncheck');
+    this.actionedUser = user;
+  }
+
+  async updateUser(user: any) {
+    user.role = this.userRole;
+    const { message } = await this.userService.updateUser(user, this.actionedUser._id);
+    this.afterRequest(message, '#editModal');
     this.userRole = 'user';
   }
 

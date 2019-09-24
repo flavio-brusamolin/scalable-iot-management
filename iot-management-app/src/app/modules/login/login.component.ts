@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('currentUserToken', response.token);
     localStorage.setItem('currentUserName', response.username);
     this.notifier.showSuccess('Bem-vindo!', 'Login realizado com sucesso');
-    this.router.navigate(['/users']);
+    this.router.navigate(['/devices-network']);
   }
 
 }

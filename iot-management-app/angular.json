@@ -20,7 +20,12 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/sigma/build",
+                "output": "assets/lib"
+              }
             ],
             "styles": [
               "src/styles.css"
@@ -32,7 +37,9 @@
               "node_modules/metismenu/dist/metisMenu.js",
               "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
               "src/assets/js/inspinia.js",
-              "src/assets/js/plugins/iCheck/icheck.min.js"
+              "src/assets/js/plugins/iCheck/icheck.min.js",
+              "src/assets/lib/sigma/sigma.conf.js",
+              "node_modules/sigma/build/sigma.min.js"
             ],
             "es5BrowserSupport": true
           },
