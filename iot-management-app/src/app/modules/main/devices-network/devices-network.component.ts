@@ -18,6 +18,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.generateGraph();
+    this.registerCallbacks();
     this.draw();
     this.intervalId = setInterval(() => this.draw(), 1000);
   }
@@ -36,6 +37,12 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         drawLabels: false,
         // enableHovering: false
       }
+    });
+  }
+
+  registerCallbacks() {
+    this.sigma.bind('clickNode', event => {
+      console.log(event.data.node);
     });
   }
 
