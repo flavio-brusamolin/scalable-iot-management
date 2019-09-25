@@ -33,7 +33,9 @@
               "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
               "src/assets/js/inspinia.js",
               "src/assets/js/plugins/iCheck/icheck.min.js",
-              "node_modules/sigma/build/sigma.min.js"
+              "node_modules/sigma/build/sigma.min.js",
+              "node_modules/sigma/build/plugins/sigma.renderers.customShapes.min.js",
+              "node_modules/sigma/build/plugins/sigma.renderers.parallelEdges.min.js"
             ],
             "es5BrowserSupport": true
           },

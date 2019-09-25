@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { DevicesNetworkService } from './devices-network.service';
 
-import Sigma from 'sigma';
+declare const sigma: any;
 
 @Component({
   selector: 'app-devices-network',
@@ -28,7 +28,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
   }
 
   generateGraph() {
-    this.sigma = new Sigma({
+    this.sigma = new sigma({
       renderer: {
         container: 'network-topology',
         type: 'canvas'
@@ -50,7 +50,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     const { devices } = await this.networkService.listDevices();
 
     const graph = {
-      nodes: [{ id: 'n0', label: 'Center element', x: 0, y: 0, size: 3, color: '#000000' }],
+      nodes: [{ id: 'n0', label: 'Center element', x: 0, y: 0, size: 4, color: '#000000' }],
       edges: []
     };
 
@@ -60,18 +60,22 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         label: devices[i].name,
         x: Math.cos(Math.PI * 2 * i / devices.length),
         y: Math.sin(Math.PI * 2 * i / devices.length),
-        size: 3,
-        color: 'black',
-        // type: 'square'
+        size: 4,
+        color: '#000000',
+        type: 'equilateral',
+        equilateral: {
+          rotate: 0,
+          numPoints: 6
+        }
       };
 
       const deviceEdge = {
         id: `e${i}`,
         source: 'n0',
         target: `n${i + 1}`,
-        color: devices[i].isConnected ? 'green' : 'red',
-        size: 1,
-        // type: 'curve'
+        color: devices[i].isConnected ? '#01DF3A' : '#FF0000',
+        size: 2,
+        type: 'curvedArrow'
       };
 
       graph.nodes.push(deviceNode);
