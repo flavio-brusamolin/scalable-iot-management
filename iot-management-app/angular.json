@@ -35,7 +35,8 @@
               "src/assets/js/plugins/iCheck/icheck.min.js",
               "node_modules/sigma/build/sigma.min.js",
               "node_modules/sigma/build/plugins/sigma.renderers.customShapes.min.js",
-              "node_modules/sigma/build/plugins/sigma.renderers.parallelEdges.min.js"
+              "node_modules/sigma/build/plugins/sigma.renderers.parallelEdges.min.js",
+              "src/assets/js/plugins/sigma/sigma.canvas.edges/sigma.canvas.edges.curvedArrowDashed.min.js"
             ],
             "es5BrowserSupport": true
           },

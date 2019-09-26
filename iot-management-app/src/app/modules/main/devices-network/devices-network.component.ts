@@ -35,16 +35,11 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       },
       settings: {
         drawLabels: false,
+        enableHovering: false,
         defaultNodeType: 'equilateral',
-        defaultEdgeType: 'curvedArrow',
-        minArrowSize: 4,
-
-        // enableHovering: false,
-        borderSize: 3,
-        defaultNodeBorderColor: 'white',
-        labelHoverShadowColor: 'white',
-
-        maxNodeSize: 14
+        minArrowSize: 6,
+        maxNodeSize: 19,
+        maxEdgeSize: 1.25
       }
     });
     this.sigma.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1.04 });
@@ -60,7 +55,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     const { devices } = await this.networkService.listDevices();
 
     const graph = {
-      nodes: [{ id: 'n0', label: 'Center element', x: 0, y: 0, size: 4, color: '#2F4050', equilateral: { rotate: 0, numPoints: 6 } }],
+      nodes: [{ id: 'n0', label: 'Center element', x: 0, y: 0, size: 1, color: '#6c859e', equilateral: { rotate: 0, numPoints: 6 } }],
       edges: []
     };
 
@@ -70,9 +65,8 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         label: devices[i].name,
         x: Math.cos(Math.PI * 2 * i / devices.length),
         y: Math.sin(Math.PI * 2 * i / devices.length),
-        size: 4,
-        color: 'rgba(138, 162, 198, 0.3)',
-        // type: 'equilateral',
+        size: 1,
+        color: devices[i].isConnected ? 'rgba(34, 201, 168, 0.5)' : 'rgba(201, 34, 98, 0.5)',
         equilateral: {
           rotate: 0,
           numPoints: 6
@@ -83,9 +77,8 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         id: `e${i}`,
         source: 'n0',
         target: `n${i + 1}`,
-        color: devices[i].isConnected ? '#01DF3A' : '#FF0000',
-        size: 6,
-        // type: 'curvedArrow'
+        color: '#6c859e',
+        type: devices[i].isConnected ? 'curvedArrow' : 'curvedArrowDashed'
       };
 
       graph.nodes.push(deviceNode);
