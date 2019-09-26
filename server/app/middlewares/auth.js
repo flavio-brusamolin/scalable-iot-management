@@ -1,5 +1,3 @@
-require('dotenv-safe').config();
-
 const jwt = require('jsonwebtoken');
 
 const generateToken = (userId, userRole) => {
