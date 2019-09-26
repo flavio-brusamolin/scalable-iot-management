@@ -4,6 +4,8 @@ import { DevicesNetworkService } from './devices-network.service';
 
 declare const sigma: any;
 
+declare const CustomShapes: any;
+
 @Component({
   selector: 'app-devices-network',
   templateUrl: './devices-network.component.html',
@@ -38,7 +40,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         enableHovering: false,
         defaultNodeType: 'equilateral',
         minArrowSize: 6,
-        maxNodeSize: 19,
+        maxNodeSize: 20,
         maxEdgeSize: 1.25
       }
     });
@@ -48,6 +50,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
   registerCallbacks() {
     this.sigma.bind('clickNode', event => {
       console.log(event.data.node);
+      this.sigma.cameras[0].goTo({ x: event.data.node['read_cam0:x'], y: event.data.node['read_cam0:y'], ratio: 0.3 });
     });
   }
 
@@ -55,7 +58,18 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     const { devices } = await this.networkService.listDevices();
 
     const graph = {
-      nodes: [{ id: 'n0', label: 'Center element', x: 0, y: 0, size: 1, color: '#6c859e', equilateral: { rotate: 0, numPoints: 6 } }],
+      nodes: [{
+        id: 'n0',
+        label: 'Broker',
+        x: 0,
+        y: 0, size: 1,
+        color: '#6c859e',
+        equilateral: {
+          rotate: 0,
+          numPoints: 6
+        },
+        image: { url: '../../../../assets/css/patterns/broker.png' }
+      }],
       edges: []
     };
 
@@ -66,11 +80,12 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         x: Math.cos(Math.PI * 2 * i / devices.length),
         y: Math.sin(Math.PI * 2 * i / devices.length),
         size: 1,
-        color: devices[i].isConnected ? 'rgba(34, 201, 168, 0.5)' : 'rgba(201, 34, 98, 0.5)',
+        color: devices[i].isConnected ? 'rgba(34, 201, 168, 0.8)' : 'rgba(201, 34, 98, 0.8)',
         equilateral: {
           rotate: 0,
           numPoints: 6
-        }
+        },
+        image: { url: '../../../../assets/css/patterns/device.png' }
       };
 
       const deviceEdge = {
@@ -84,6 +99,8 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       graph.nodes.push(deviceNode);
       graph.edges.push(deviceEdge);
     }
+
+    CustomShapes.init(this.sigma);
 
     this.sigma.graph.clear();
     this.sigma.graph.read(graph);
