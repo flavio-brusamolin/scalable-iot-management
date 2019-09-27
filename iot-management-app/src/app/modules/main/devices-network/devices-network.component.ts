@@ -44,7 +44,10 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         maxEdgeSize: 1.25
       }
     });
+
     this.sigma.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1.04 });
+
+    CustomShapes.init(this.sigma);
   }
 
   registerCallbacks() {
@@ -58,20 +61,24 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     const { devices } = await this.networkService.listDevices();
 
     const graph = {
-      nodes: [{
-        id: 'n0',
-        label: 'Broker',
-        x: 0,
-        y: 0, size: 1,
-        color: '#6c859e',
-        equilateral: {
-          rotate: 0,
-          numPoints: 6
-        },
-        image: { url: '../../../../assets/css/patterns/broker.png' }
-      }],
+      nodes: [],
       edges: []
     };
+
+    const brokerNode = {
+      id: 'n0',
+      label: 'MQTT Broker',
+      x: 0,
+      y: 0,
+      size: 1,
+      color: '#6c859e',
+      equilateral: {
+        rotate: 0,
+        numPoints: 6
+      },
+      image: { url: '../../../../assets/css/patterns/broker.png' }
+    };
+    graph.nodes.push(brokerNode);
 
     for (let i = 0; i < devices.length; i++) {
       const deviceNode = {
@@ -85,7 +92,11 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
           rotate: 0,
           numPoints: 6
         },
-        image: { url: '../../../../assets/css/patterns/device.png' }
+        image: { url: '../../../../assets/css/patterns/device.png' },
+        data: {
+          id: devices[i]._id,
+          type: devices[i].type
+        }
       };
 
       const deviceEdge = {
@@ -99,8 +110,6 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       graph.nodes.push(deviceNode);
       graph.edges.push(deviceEdge);
     }
-
-    CustomShapes.init(this.sigma);
 
     this.sigma.graph.clear();
     this.sigma.graph.read(graph);
