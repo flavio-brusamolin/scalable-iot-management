@@ -30,8 +30,7 @@ const deviceSchema = new Schema({
     turnOff: {
         type: String,
         required: [true, 'Forma de desligamento obrigatória']
-    },
-    data: [String]
+    }
 });
 
 deviceSchema.plugin(uniqueValidator, { message: 'Dispositivo já existente' });
