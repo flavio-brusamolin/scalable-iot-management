@@ -11,23 +11,23 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     listUsers(): Promise<any> {
-        const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
-        return this.http.get(this.url, { headers: header }).toPromise();
+        const headers = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
+        return this.http.get(this.url, { headers }).toPromise();
     }
 
     storeUser(user: any): Promise<any> {
-        const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
-        return this.http.post(this.url, user, { headers: header }).toPromise();
+        const headers = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
+        return this.http.post(this.url, user, { headers }).toPromise();
     }
 
     updateUser(user: any, userId: string): Promise<any> {
-        const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
-        return this.http.put(`${this.url}/${userId}`, user, { headers: header }).toPromise();
+        const headers = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
+        return this.http.put(`${this.url}/${userId}`, user, { headers }).toPromise();
     }
 
     removeUser(userId: string): Promise<any> {
-        const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
-        return this.http.delete(`${this.url}/${userId}`, { headers: header }).toPromise();
+        const headers = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
+        return this.http.delete(`${this.url}/${userId}`, { headers }).toPromise();
     }
 
 }

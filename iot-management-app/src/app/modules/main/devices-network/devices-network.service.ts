@@ -11,8 +11,13 @@ export class DevicesNetworkService {
     constructor(private http: HttpClient) { }
 
     listDevices(): Promise<any> {
-        const header = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
-        return this.http.get(this.url, { headers: header }).toPromise();
+        const headers = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
+        return this.http.get(this.url, { headers }).toPromise();
+    }
+
+    getDeviceData(deviceId: string): Promise<any> {
+        const headers = new HttpHeaders().append('x-access-token', localStorage.getItem('currentUserToken'));
+        return this.http.get(`${this.url}/${deviceId}`, { headers }).toPromise();
     }
 
 }

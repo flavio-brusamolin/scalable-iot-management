@@ -1,1 +1,28 @@
-<div id="network-topology" class="wrapper wrapper-content animated fadeInRight"></div>
+<div id="network-topology" class="wrapper wrapper-content animated fadeInRight no-padding"></div>
+
+<div class="modal fade inmodal" id="dataModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <i class="fa fa-cube modal-icon"></i>
+                <h5 class="modal-title">{{actionedDevice.label}}: {{actionedDevice.name}}</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4" *ngFor="let information of actionedDevice.data | keyvalue">
+                        <div class="widget navy-bg no-padding">
+                            <label class="text-capitalize m-xs">{{information.key}}</label>
+                            <br>
+                            <h3 class="text-center" style="font-size: 18px">{{information.value}}</h3>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

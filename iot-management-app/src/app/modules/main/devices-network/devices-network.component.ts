@@ -2,9 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { DevicesNetworkService } from './devices-network.service';
 
-declare const sigma: any;
+import { NotificationService } from 'src/app/core/services/notification/notification.service';
 
+declare const sigma: any;
 declare const CustomShapes: any;
+
+declare const $: any;
 
 @Component({
   selector: 'app-devices-network',
@@ -14,9 +17,10 @@ declare const CustomShapes: any;
 export class DevicesNetworkComponent implements OnInit, OnDestroy {
 
   sigma: any;
+  actionedDevice: any = {};
   intervalId: any;
 
-  constructor(private networkService: DevicesNetworkService) { }
+  constructor(private networkService: DevicesNetworkService, private notifier: NotificationService) { }
 
   ngOnInit() {
     this.generateGraph();
@@ -45,15 +49,32 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.sigma.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1.04 });
+    this.sigma.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1.1 });
 
     CustomShapes.init(this.sigma);
   }
 
   registerCallbacks() {
-    this.sigma.bind('clickNode', event => {
-      console.log(event.data.node);
-      this.sigma.cameras[0].goTo({ x: event.data.node['read_cam0:x'], y: event.data.node['read_cam0:y'], ratio: 0.3 });
+    this.sigma.bind('clickNode', async event => {
+      const node = event.data.node;
+
+      if (node.label === 'Gateway') {
+        this.notifier.showError('Error!', 'There is no information about the Gateway to display');
+      } else if (!node.info.isConnected) {
+        this.notifier.showError('Error!', 'This device is disconnected from the network');
+      } else {
+        this.sigma.cameras[0].goTo({ x: node['read_cam0:x'], y: node['read_cam0:y'], ratio: 0.3 });
+
+        const { data } = await this.networkService.getDeviceData(node.info.id);
+
+        this.actionedDevice = {
+          label: node.label,
+          name: node.info.name,
+          data
+        };
+
+        $('#dataModal').modal('show');
+      }
     });
   }
 
@@ -65,9 +86,9 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       edges: []
     };
 
-    const brokerNode = {
+    const gateway = {
       id: 'n0',
-      label: 'MQTT Broker',
+      label: 'Gateway',
       x: 0,
       y: 0,
       size: 1,
@@ -78,12 +99,12 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       },
       image: { url: '../../../../assets/css/patterns/broker.png' }
     };
-    graph.nodes.push(brokerNode);
+    graph.nodes.push(gateway);
 
     for (let i = 0; i < devices.length; i++) {
       const deviceNode = {
         id: `n${i + 1}`,
-        label: devices[i].name,
+        label: `Device ${i + 1}`,
         x: Math.cos(Math.PI * 2 * i / devices.length),
         y: Math.sin(Math.PI * 2 * i / devices.length),
         size: 1,
@@ -93,9 +114,11 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
           numPoints: 6
         },
         image: { url: '../../../../assets/css/patterns/device.png' },
-        data: {
+        info: {
           id: devices[i]._id,
-          type: devices[i].type
+          name: devices[i].name,
+          type: devices[i].type,
+          isConnected: devices[i].isConnected
         }
       };
 
