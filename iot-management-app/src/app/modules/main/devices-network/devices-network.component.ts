@@ -18,7 +18,9 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
 
   sigma: any;
   actionedDevice: any = {};
-  intervalId: any;
+
+  netoworkGraphIntervalId: any;
+  deviceDataIntervalId: any;
 
   constructor(private networkService: DevicesNetworkService, private notifier: NotificationService) { }
 
@@ -26,11 +28,11 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     this.generateGraph();
     this.registerCallbacks();
     this.draw();
-    this.intervalId = setInterval(() => this.draw(), 1000);
+    this.netoworkGraphIntervalId = setInterval(() => this.draw(), 1000);
   }
 
   ngOnDestroy() {
-    clearInterval(this.intervalId);
+    clearInterval(this.netoworkGraphIntervalId);
   }
 
   generateGraph() {
@@ -44,8 +46,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         enableHovering: false,
         defaultNodeType: 'equilateral',
         minArrowSize: 6,
-        maxNodeSize: 20,
-        maxEdgeSize: 1.25
+        maxNodeSize: 22
       }
     });
 
@@ -55,25 +56,21 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
   }
 
   registerCallbacks() {
-    this.sigma.bind('clickNode', async event => {
-      const node = event.data.node;
+    this.sigma.bind('clickNode', event => {
+      const device = event.data.node;
 
-      if (node.label === 'Gateway') {
+      if (device.label === 'Gateway') {
         this.notifier.showError('Error!', 'There is no information about the Gateway to display');
-      } else if (!node.info.isConnected) {
-        this.notifier.showError('Error!', 'This device is disconnected from the network');
+      } else if (!device.info.isConnected) {
+        this.notifier.showError('Error!', `${device.info.name} is disconnected from the network`);
       } else {
-        this.sigma.cameras[0].goTo({ x: node['read_cam0:x'], y: node['read_cam0:y'], ratio: 0.3 });
+        // this.sigma.cameras[0].goTo({ x: device['read_cam0:x'], y: device['read_cam0:y'], ratio: 0.3 });
 
-        const { data } = await this.networkService.getDeviceData(node.info.id);
-
-        this.actionedDevice = {
-          label: node.label,
-          name: node.info.name,
-          data
-        };
-
+        $('#dataModal').modal({ backdrop: 'static', keyboard: false });
         $('#dataModal').modal('show');
+
+        this.fetchDeviceData(device);
+        this.deviceDataIntervalId = setInterval(() => this.fetchDeviceData(device), 2000);
       }
     });
   }
@@ -108,7 +105,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         x: Math.cos(Math.PI * 2 * i / devices.length),
         y: Math.sin(Math.PI * 2 * i / devices.length),
         size: 1,
-        color: devices[i].isConnected ? 'rgba(34, 201, 168, 0.8)' : 'rgba(201, 34, 98, 0.8)',
+        color: devices[i].isConnected ? 'rgba(34, 201, 168, 0.8)' : 'rgba(201, 34, 79, 0.8)',
         equilateral: {
           rotate: 0,
           numPoints: 6
@@ -137,6 +134,21 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     this.sigma.graph.clear();
     this.sigma.graph.read(graph);
     this.sigma.refresh();
+  }
+
+  async fetchDeviceData(device: any) {
+    const { data } = await this.networkService.getDeviceData(device.info.id);
+
+    this.actionedDevice = {
+      label: device.label,
+      name: device.info.name,
+      data
+    };
+  }
+
+  stopDeviceDataRequests() {
+    clearInterval(this.deviceDataIntervalId);
+    // this.sigma.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1.1 });
   }
 
 }

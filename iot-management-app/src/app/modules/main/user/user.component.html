@@ -53,7 +53,8 @@
       <div class="modal-header">
         <i class="fa fa-plus-circle modal-icon"></i>
         <h4 class="modal-title">Add user</h4>
-        <small class="font-bold">Users added will have access to system resources according to their role.</small>
+        <small class="font-bold" style="font-size: 11px;">Users added will have access to system resources according to
+          their role.</small>
       </div>
       <form role="form" [formGroup]="addForm" (ngSubmit)="storeUser(addForm.value)">
         <div class="modal-body">
@@ -92,7 +93,8 @@
       <div class="modal-header">
         <i class="fa fa-edit modal-icon"></i>
         <h4 class="modal-title">Update user</h4>
-        <small class="font-bold">When editing a user, the old information will be subscribed and cannot be
+        <small class="font-bold" style="font-size: 11px;">When editing a user, the old information will be subscribed
+          and cannot be
           retrieved.</small>
       </div>
       <form role="form" [formGroup]="editForm" (ngSubmit)="updateUser(editForm.value)">
@@ -132,7 +134,7 @@
       <div class="modal-header">
         <i class="fa fa-times-circle-o modal-icon"></i>
         <h4 class="modal-title">Remove user</h4>
-        <small class="font-bold">Confirming, user will be removed from system.</small>
+        <small class="font-bold" style="font-size: 11px;">Confirming, user will be removed from system.</small>
       </div>
       <div class="modal-body">
         <label>Do you want to remove <strong>{{actionedUser.name}}</strong>?</label>

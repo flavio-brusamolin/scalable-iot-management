@@ -37,3 +37,19 @@
 #page-wrapper {
   transition: all 0.4s;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: rgb(137, 137, 137); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(104, 104, 104); 
+}

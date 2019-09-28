@@ -4,3 +4,15 @@
     width: 100%;
     height: 100%;
 }
+
+.green-card {
+    background-image:linear-gradient(to top right, #1ab394 0%, #1be3ba 100%);
+}
+
+.blue-card {
+    background-image:linear-gradient(to top right, #0fa6a8 0%, #21d7d9 100%);
+}
+
+.yellow-card {
+    background-image:linear-gradient(to top right, #f8ac59 0%, #ffd073 100%);
+}
