@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { UiSwitchModule } from 'ngx-toggle-switch';
+
 import { DevicesNetworkRoutingModule } from './devices-network.routing';
 import { DevicesNetworkService } from './devices-network.service';
 import { DevicesNetworkComponent } from './devices-network.component';
@@ -11,6 +13,7 @@ import { DevicesNetworkComponent } from './devices-network.component';
     ],
     imports: [
         CommonModule,
+        UiSwitchModule,
         DevicesNetworkRoutingModule
     ],
     providers: [

@@ -7,12 +7,15 @@
 
 .green-card {
     background-image:linear-gradient(to top right, #1ab394 0%, #1be3ba 100%);
+    box-shadow: -3px 3px 12px -7px rgba(0,0,0,0.6);
 }
 
 .blue-card {
     background-image:linear-gradient(to top right, #0fa6a8 0%, #21d7d9 100%);
+    box-shadow: -3px 3px 12px -7px rgba(0,0,0,0.6);
 }
 
 .yellow-card {
     background-image:linear-gradient(to top right, #f8ac59 0%, #ffd073 100%);
+    box-shadow: -3px 3px 12px -7px rgba(0,0,0,0.6);
 }
