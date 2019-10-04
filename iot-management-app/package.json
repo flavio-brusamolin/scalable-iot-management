@@ -29,6 +29,7 @@
     "jwt-decode": "^2.2.0",
     "metismenu": "^3.0.4",
     "ngx-toastr": "^10.2.0",
+    "ngx-toggle-switch": "^2.0.5",
     "popper.js": "^1.15.0",
     "rxjs": "~6.3.3",
     "sigma": "^1.2.1",
