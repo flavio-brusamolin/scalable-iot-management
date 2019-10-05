@@ -33,7 +33,7 @@ const deviceSchema = new Schema({
     }
 });
 
-deviceSchema.plugin(uniqueValidator, { message: 'Dispositivo já existente' });
+deviceSchema.plugin(uniqueValidator, { message: "Dois dispositivos não podem possuir o mesmo campo '{PATH}'" });
 
 const Device = mongoose.model('devices', deviceSchema);
 

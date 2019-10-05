@@ -5,7 +5,7 @@
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
                 <div class="no-margins row">
-                    <ui-switch size="small" color="#17d4ad"></ui-switch>
+                    <ui-switch size="small" color="#17d4ad" (change)="changeDeviceState($event)"></ui-switch>
                     <h5 class="m-l-xs">ON/OFF</h5>
                 </div>
                 <i class="fa fa-cube modal-icon"></i>

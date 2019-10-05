@@ -64,7 +64,10 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       } else if (!device.info.isConnected) {
         this.notifier.showError('Error!', `${device.info.name} is disconnected from the network`);
       } else {
-        // this.sigma.cameras[0].goTo({ x: device['read_cam0:x'], y: device['read_cam0:y'], ratio: 0.3 });
+        sigma.misc.animation.camera(this.sigma.cameras[0],
+          { x: device['read_cam0:x'], y: device['read_cam0:y'], ratio: 0.3 },
+          { duration: 300 }
+        );
 
         $('#dataModal').modal({ backdrop: 'static', keyboard: false });
         $('#dataModal').modal('show');
@@ -140,15 +143,25 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     const { data } = await this.networkService.getDeviceData(device.info.id);
 
     this.actionedDevice = {
+      id: device.info.id,
       label: device.label,
       name: device.info.name,
       data
     };
   }
 
+  async changeDeviceState(state: boolean) {
+    const { message } = await this.networkService.changeDeviceState(this.actionedDevice.id, state ? 'on' : 'off');
+    this.notifier.showSuccess('Muito bem!', message);
+  }
+
   stopDeviceDataRequests() {
     clearInterval(this.deviceDataIntervalId);
-    // this.sigma.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1.1 });
+
+    sigma.misc.animation.camera(this.sigma.cameras[0],
+      { x: 0, y: 0, ratio: 1.1 },
+      { duration: 500 }
+    );
   }
 
 }
