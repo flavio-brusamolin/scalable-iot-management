@@ -4,11 +4,10 @@ import { DevicesNetworkService } from './devices-network.service';
 
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
 
-import {Mustache} from 'node_modules/mustache';
+import * as Mustache from 'mustache';
 
 declare const sigma: any;
 declare const CustomShapes: any;
-
 declare const $: any;
 
 @Component({
@@ -58,23 +57,32 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
   }
 
   registerCallbacks() {
-    var config = {
+    const config = {
       node: {
-          show: 'hovers',
-          hide: 'hovers',
-          cssClass: 'sigma-tooltip',
-          position: 'top',
-          autoadjust: true,
-          template:
-              '<div><h1>aaa</h1></div>',
-          renderer: function (node, template) {
-              node.degree = this.degree(node.id);
-              return Mustache.render(template, node);
-          }
+        show: 'overNode',
+        hide: 'outNode',
+        cssClass: 'sigma-tooltip',
+        position: 'right',
+        autoadjust: true,
+        template:
+          '<div class="arrow"></div>' +
+          ' <div class="sigma-tooltip-header">{{label}}</div>' +
+          '   <div class="sigma-tooltip-body">' +
+          '     <div class="row">' +
+          '       <label class="col-12 m-b-none"><strong>Name:</strong> {{info.name}}</label>' +
+          '       <label class="col-12 m-b-none"><strong>Type:</strong> {{info.type}}</label>' +
+          '       <label class="col-12 m-b-none"><strong>Protocol:</strong> MQTT</label>' +
+          '     </div>' +
+          '   </div>' +
+          ' <div class="sigma-tooltip-footer"><th>Number of connections:</th> {{degree}}</div>',
+        renderer(node: any, template: string) {
+          node.degree = this.degree(node.id);
+          return Mustache.render(template, node);
+        }
       }
-  };
+    };
 
-  sigma.plugins.tooltips(this.sigma, this.sigma.renderers[0], config);
+    sigma.plugins.tooltips(this.sigma, this.sigma.renderers[0], config);
 
     this.sigma.bind('clickNode', event => {
       const device = event.data.node;
