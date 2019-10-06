@@ -7,12 +7,12 @@ const Schema = mongoose.Schema;
 const deviceSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'Nome do dispositivo obrigatório'],
+        required: [true, 'Device name required'],
         unique: true
     },
     type: {
         type: String,
-        required: [true, 'Tipo do dispositivo obrigatório']
+        required: [true, 'Device type required']
     },
     isConnected: {
         type: Boolean,
@@ -20,20 +20,20 @@ const deviceSchema = new Schema({
     },
     topic: {
         type: String,
-        required: [true, 'Tópico do dispositivo obrigatório'],
+        required: [true, 'Device topic required'],
         unique: true
     },
     turnOn: {
         type: String,
-        required: [true, 'Forma de acionamento obrigatória']
+        required: [true, 'Trigger format required']
     },
     turnOff: {
         type: String,
-        required: [true, 'Forma de desligamento obrigatória']
+        required: [true, 'Shutdown format required']
     }
 });
 
-deviceSchema.plugin(uniqueValidator, { message: "Dois dispositivos não podem possuir o mesmo campo '{PATH}'" });
+deviceSchema.plugin(uniqueValidator, { message: "Two devices cannot have the same field '{PATH}'" });
 
 const Device = mongoose.model('devices', deviceSchema);
 

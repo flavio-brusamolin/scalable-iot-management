@@ -36,7 +36,7 @@ const getDeviceData = topic => {
     return new Promise((resolve, reject) => {
         client.subscribe(topic, err => reject(err));
         client.on('message', (topic, message) => resolve(JSON.parse(message)));
-        setTimeout(() => reject('Não foi possivel buscar as informações do dispositivo'), 3000);
+        setTimeout(() => reject('Unable to fetch device data'), 3000);
     });
 }
 

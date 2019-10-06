@@ -1,4 +1,3 @@
-/* manipula mensagem de erro */
 const handleError = unreadableError => {
     let errorMessage = '';
     const errors = unreadableError.split(',');
@@ -21,5 +20,4 @@ const handleError = unreadableError => {
     return errorMessage;
 }
 
-/* exporta os métodos */
 module.exports = handleError;

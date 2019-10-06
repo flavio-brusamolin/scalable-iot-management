@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     const response = await this.authService.login(user);
     localStorage.setItem('currentUserToken', response.token);
     localStorage.setItem('currentUserName', response.username);
-    this.notifier.showSuccess('Bem-vindo!', 'Login realizado com sucesso');
+    this.notifier.showSuccess('Welcome!', 'Successfully login');
     this.router.navigate(['/devices-network']);
   }
 

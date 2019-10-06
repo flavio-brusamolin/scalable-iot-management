@@ -22,8 +22,8 @@ const getDeviceOptions = id => {
     return new Promise((resolve, reject) => {
         Device.findById(id).select('-name -type')
             .then(options => {
-                if (!options) reject('Dispositivo não encontrado');
-                else if (!options.isConnected) reject('Dispositivo desconectado');
+                if (!options) reject('Device not found');
+                else if (!options.isConnected) reject('This device is offline');
                 else resolve(options);
             })
             .catch(err => reject(handleError(err.message)))

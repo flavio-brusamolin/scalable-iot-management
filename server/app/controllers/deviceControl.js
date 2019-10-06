@@ -7,7 +7,7 @@ const createDevice = async (req, res) => {
     try {
         if (device.topic) device.isConnected = await mqttManagement.verifyDeviceConnection(device.topic);
         await deviceDAO.createDevice(device);
-        res.status(201).json({ success: true, message: 'Dispositivo cadastrado com sucesso' });
+        res.status(201).json({ success: true, message: 'Successfully registered device' });
     } catch (error) {
         res.status(400).json({ success: false, message: error });
     }
@@ -26,13 +26,13 @@ const changeDeviceState = async (req, res) => {
     const id = req.params.id;
     const action = req.query.action;
     if (action !== 'on' && action !== 'off')
-        return res.status(400).json({ success: false, message: 'Impossível realizar a ação desejada' });
+        return res.status(400).json({ success: false, message: 'Impossible to perform chosen action' });
     try {
         const { topic, turnOn, turnOff } = await deviceDAO.getDeviceOptions(id);
         action === 'on' ?
             await mqttManagement.changeDeviceState(topic, turnOn) :
             await mqttManagement.changeDeviceState(topic, turnOff);
-        res.status(200).json({ success: true, message: 'Ação realizada com sucesso' });
+        res.status(200).json({ success: true, message: 'Successfully taken action' });
     } catch (error) {
         res.status(400).json({ success: false, message: error });
     }

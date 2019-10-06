@@ -9,7 +9,7 @@ const createUser = async (req, res) => {
     if (user.password) user.password = crypto.encrypt(user.password);
     try {
         await userDAO.createUser(user);
-        res.status(201).json({ success: true, message: 'Usuário cadastrado com sucesso' });
+        res.status(201).json({ success: true, message: 'Successfully registered user' });
     } catch (error) {
         res.status(400).json({ success: false, message: error });
     }
@@ -30,7 +30,7 @@ const updateUser = async (req, res) => {
     if (newUser.password) newUser.password = crypto.encrypt(newUser.password);
     try {
         await userDAO.updateUser(id, newUser);
-        res.status(200).json({ success: true, message: 'Usuário editado com sucesso' });
+        res.status(200).json({ success: true, message: 'Successfully updated user' });
     } catch (error) {
         res.status(400).json({ success: false, message: error });
     }
@@ -40,7 +40,7 @@ const removeUser = async (req, res) => {
     const id = req.params.id;
     try {
         await userDAO.removeUser(id);
-        res.status(200).json({ success: true, message: 'Usuário excluído com sucesso' });
+        res.status(200).json({ success: true, message: 'Successfully removed user' });
     } catch (error) {
         res.status(400).json({ success: false, message: error });
     }

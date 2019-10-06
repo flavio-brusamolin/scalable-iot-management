@@ -15,11 +15,11 @@ export class ServerErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             retry(1),
             catchError((error: HttpErrorResponse) => {
-                if (error.error.message === 'Falha ao autenticar token') {
+                if (error.error.message === 'Failed to authenticate token') {
                     $('.modal').modal('hide');
                     this.router.navigate(['/login']);
                     localStorage.clear();
-                    return throwError('Sessão expirada. É necessário realizar login novamente');
+                    return throwError('Session expired. Please login again');
                 } else {
                     return throwError(error);
                 }

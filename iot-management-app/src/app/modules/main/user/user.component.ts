@@ -88,7 +88,7 @@ export class UserComponent implements OnInit {
   }
 
   afterRequest(message: string, modalId: string) {
-    this.notifier.showSuccess('Muito bem!', message);
+    this.notifier.showSuccess('Great!', message);
     $(modalId).modal('hide');
     this.listUsers();
   }

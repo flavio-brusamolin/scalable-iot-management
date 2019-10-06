@@ -152,7 +152,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
 
   async changeDeviceState(state: boolean) {
     const { message } = await this.networkService.changeDeviceState(this.actionedDevice.id, state ? 'on' : 'off');
-    this.notifier.showSuccess('Muito bem!', message);
+    this.notifier.showSuccess('Great!', message);
   }
 
   stopDeviceDataRequests() {

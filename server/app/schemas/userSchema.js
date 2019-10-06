@@ -7,28 +7,28 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'Nome obrigatório']
+        required: [true, 'User name required']
     },
     user: {
         type: String,
-        required: [true, 'Login de acesso obrigatório'],
+        required: [true, 'User login required'],
         unique: true
     },
     password: {
         type: String,
-        required: [true, 'Senha obrigatória']
+        required: [true, 'User password required']
     },
     role: {
         type: String,
-        required: [true, 'Perfil obrigatório'],
+        required: [true, 'User role required'],
         enum: {
             values: ['admin', 'user'],
-            message: "Perfil do usuário deve ser 'admin' ou 'user'"
+            message: "User profile must be 'admin' or 'user'"
         }
     }
 });
 
-userSchema.plugin(uniqueValidator, { message: 'Nome de usuário já existente' });
+userSchema.plugin(uniqueValidator, { message: 'Login already exists' });
 
 const User = mongoose.model('users', userSchema);
 

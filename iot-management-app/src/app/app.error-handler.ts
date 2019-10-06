@@ -20,12 +20,12 @@ export class GlobalErrorHandler implements ErrorHandler {
             // Client Error
             errorMessage = this.getClientMessage(error);
         }
-        this.notifier.showError('Erro!', errorMessage);
+        this.notifier.showError('Error!', errorMessage);
     }
 
     private getClientMessage(error: Error): string {
         if (!navigator.onLine) {
-            return 'Verifique sua conexão com a Internet';
+            return 'Check your connection';
         }
         return error.message ? error.message : error.toString();
     }

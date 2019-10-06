@@ -17,7 +17,7 @@ export class RoleGuard implements CanActivate {
     const token = localStorage.getItem('currentUserToken');
     const tokenPayload: any = decode(token);
     if (tokenPayload.userRole !== expectedRole) {
-      this.notifier.showError('Permissão negada!', 'Recurso de administrador');
+      this.notifier.showError('Permission denied!', 'Administrator resource');
       this.router.navigate(['/devices-network']);
       return false;
     }

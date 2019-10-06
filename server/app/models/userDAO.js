@@ -21,7 +21,7 @@ const listUsers = () => {
 const updateUser = (id, newUser) => {
     return new Promise((resolve, reject) => {
         User.findByIdAndUpdate(id, newUser, { runValidators: true, context: 'query' })
-            .then(result => !result ? reject('Id não encontrado') : resolve())
+            .then(result => !result ? reject('User not found') : resolve())
             .catch(err => reject(handleError(err.message)))
     });
 }
@@ -29,7 +29,7 @@ const updateUser = (id, newUser) => {
 const removeUser = id => {
     return new Promise((resolve, reject) => {
         User.findByIdAndDelete(id)
-            .then(result => !result ? reject('Id não encontrado') : resolve())
+            .then(result => !result ? reject('User not found') : resolve())
             .catch(err => reject(handleError(err.message)))
     });
 }
@@ -37,7 +37,7 @@ const removeUser = id => {
 const authenticateUser = (user, password) => {
     return new Promise((resolve, reject) => {
         User.findOne({ user: user, password: password })
-            .then(authUser => !authUser ? reject('Nome de usuário ou senha incorretos') : resolve(authUser))
+            .then(authUser => !authUser ? reject('Incorrect username or password') : resolve(authUser))
             .catch(err => reject(handleError(err.message)))
     });
 }

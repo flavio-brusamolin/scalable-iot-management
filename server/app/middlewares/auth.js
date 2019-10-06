@@ -9,9 +9,9 @@ const generateToken = (userId, userRole) => {
 
 const verifyToken = (req, res, next) => {
     const token = req.headers['x-access-token'];
-    if (!token) return res.status(401).json({ success: false, message: 'Nenhum token enviado' });
+    if (!token) return res.status(401).json({ success: false, message: 'No token sent' });
     jwt.verify(token, process.env.SECRET, (err, decodedToken) => {
-        if (err) return res.status(401).json({ success: false, message: 'Falha ao autenticar token' });
+        if (err) return res.status(401).json({ success: false, message: 'Failed to authenticate token' });
         req.decodedToken = decodedToken;
         next();
     });
@@ -19,7 +19,7 @@ const verifyToken = (req, res, next) => {
 
 const checkRole = (req, res, next) => {
     const userRole = req.decodedToken.userRole;
-    if (userRole === 'user') return res.status(401).json({ success: false, message: 'Permissão negada' });
+    if (userRole === 'user') return res.status(401).json({ success: false, message: 'Permission denied' });
     next();
 }
 
