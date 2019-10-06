@@ -36,7 +36,10 @@
               "node_modules/sigma/build/sigma.min.js",
               "node_modules/sigma/build/plugins/sigma.renderers.customShapes.min.js",
               "node_modules/sigma/build/plugins/sigma.renderers.parallelEdges.min.js",
-              "src/assets/js/plugins/sigma/sigma.canvas.edges/sigma.canvas.edges.curvedArrowDashed.min.js"
+              "src/assets/js/plugins/sigma/sigma.canvas.edges/sigma.canvas.edges.curvedArrowDashed.min.js",
+              "node_modules/mustache/mustache.js",
+              "node_modules/mustache/mustache.min.js",
+              "src/assets/js/plugins/sigma/sigma.plugins.tooltips.js"
             ],
             "es5BrowserSupport": true
           },

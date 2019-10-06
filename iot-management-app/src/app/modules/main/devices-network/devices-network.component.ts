@@ -4,6 +4,8 @@ import { DevicesNetworkService } from './devices-network.service';
 
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
 
+import {Mustache} from 'node_modules/mustache';
+
 declare const sigma: any;
 declare const CustomShapes: any;
 
@@ -56,6 +58,24 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
   }
 
   registerCallbacks() {
+    var config = {
+      node: {
+          show: 'hovers',
+          hide: 'hovers',
+          cssClass: 'sigma-tooltip',
+          position: 'top',
+          autoadjust: true,
+          template:
+              '<div><h1>aaa</h1></div>',
+          renderer: function (node, template) {
+              node.degree = this.degree(node.id);
+              return Mustache.render(template, node);
+          }
+      }
+  };
+
+  sigma.plugins.tooltips(this.sigma, this.sigma.renderers[0], config);
+
     this.sigma.bind('clickNode', event => {
       const device = event.data.node;
 
