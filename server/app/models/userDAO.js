@@ -1,7 +1,9 @@
+/* imports */
 const User = require('../schemas/userSchema');
 
 const handleError = require('../utils/handleError');
 
+/* create new user */
 const createUser = user => {
     return new Promise((resolve, reject) => {
         new User(user).save()
@@ -10,6 +12,7 @@ const createUser = user => {
     });
 }
 
+/* list users */
 const listUsers = () => {
     return new Promise((resolve, reject) => {
         User.find().select('-password')
@@ -18,6 +21,7 @@ const listUsers = () => {
     });
 }
 
+/* update user data */
 const updateUser = (id, newUser) => {
     return new Promise((resolve, reject) => {
         User.findByIdAndUpdate(id, newUser, { runValidators: true, context: 'query' })
@@ -26,6 +30,7 @@ const updateUser = (id, newUser) => {
     });
 }
 
+/* remove user */
 const removeUser = id => {
     return new Promise((resolve, reject) => {
         User.findByIdAndDelete(id)
@@ -34,6 +39,7 @@ const removeUser = id => {
     });
 }
 
+/* authenticate user by username and password */
 const authenticateUser = (user, password) => {
     return new Promise((resolve, reject) => {
         User.findOne({ user: user, password: password })
@@ -42,6 +48,7 @@ const authenticateUser = (user, password) => {
     });
 }
 
+/* exports */
 module.exports = {
     createUser,
     listUsers,

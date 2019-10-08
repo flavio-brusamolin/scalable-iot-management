@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
 
+/* global error handler */
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 

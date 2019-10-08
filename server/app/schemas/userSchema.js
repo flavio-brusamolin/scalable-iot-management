@@ -1,7 +1,9 @@
+/* imports */
 const mongoose = require('mongoose');
 
 const uniqueValidator = require('mongoose-unique-validator');
 
+/* create user schema */
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -28,8 +30,11 @@ const userSchema = new Schema({
     }
 });
 
+/* add unique validator plugin to user schema */
 userSchema.plugin(uniqueValidator, { message: 'Login already exists' });
 
+/* save device schema on object User */
 const User = mongoose.model('users', userSchema);
 
+/* exports */
 module.exports = User; 

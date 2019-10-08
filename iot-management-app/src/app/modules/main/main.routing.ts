@@ -5,6 +5,7 @@ import { MainComponent } from './main.component';
 
 import { RoleGuard } from 'src/app/core/guards/role/role.guard';
 
+/* main routes */
 const mainRoutes: Routes = [
   {
     path: '', component: MainComponent,

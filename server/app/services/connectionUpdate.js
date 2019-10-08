@@ -1,7 +1,9 @@
+/* imports */
 const { listAllTopics, updateDeviceConnection } = require('../models/deviceDAO');
 
 const { verifyDeviceConnection } = require('../mqtt/mqttManagement');
 
+/* verify and update devices connection */
 const verifyDevicesConnection = async () => {
     while (true) {
         try {
@@ -17,4 +19,5 @@ const verifyDevicesConnection = async () => {
     }
 }
 
+/* exports */
 verifyDevicesConnection();

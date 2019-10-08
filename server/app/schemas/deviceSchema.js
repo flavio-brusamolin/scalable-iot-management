@@ -1,7 +1,9 @@
+/* imports */
 const mongoose = require('mongoose');
 
 const uniqueValidator = require('mongoose-unique-validator');
 
+/* create device schema */
 const Schema = mongoose.Schema;
 
 const deviceSchema = new Schema({
@@ -16,7 +18,7 @@ const deviceSchema = new Schema({
     },
     isConnected: {
         type: Boolean,
-        required: true
+        required: [true, 'Device connection status is required']
     },
     topic: {
         type: String,
@@ -33,8 +35,11 @@ const deviceSchema = new Schema({
     }
 });
 
+/* add unique validator plugin to device schema */
 deviceSchema.plugin(uniqueValidator, { message: "Two devices cannot have the same field '{PATH}'" });
 
+/* save device schema on object Device */
 const Device = mongoose.model('devices', deviceSchema);
 
+/* exports */
 module.exports = Device; 

@@ -12,6 +12,7 @@ export class RoleGuard implements CanActivate {
 
   constructor(private router: Router, private notifier: NotificationService) { }
 
+  /* check if current user have permission to access route */
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRole = route.data.expectedRole;
     const token = localStorage.getItem('currentUserToken');

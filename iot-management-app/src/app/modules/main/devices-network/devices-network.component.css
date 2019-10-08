@@ -1,8 +1,6 @@
 #network-topology {
-    min-width: 600px;
-    min-height: 732px;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 60px);
 }
 
 .green-card {

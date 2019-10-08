@@ -36,6 +36,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     clearInterval(this.netoworkGraphIntervalId);
   }
 
+  /* generate sigma instance */
   generateGraph() {
     this.sigma = new sigma({
       renderer: {
@@ -51,11 +52,12 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.sigma.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1.1 });
+    this.sigma.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1.05 });
 
     CustomShapes.init(this.sigma);
   }
 
+  /* register event callbacks to hover and click nodes */
   registerCallbacks() {
     const config = {
       node: {
@@ -82,7 +84,15 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       }
     };
 
-    sigma.plugins.tooltips(this.sigma, this.sigma.renderers[0], config);
+    const tooltips = sigma.plugins.tooltips(this.sigma, this.sigma.renderers[0], config);
+
+    tooltips.bind('shown', () => {
+      clearInterval(this.netoworkGraphIntervalId);
+    });
+
+    tooltips.bind('hidden', () => {
+      this.netoworkGraphIntervalId = setInterval(() => this.draw(), 1000);
+    });
 
     this.sigma.bind('clickNode', event => {
       const device = event.data.node;
@@ -106,6 +116,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     });
   }
 
+  /* draw network topology */
   async draw() {
     const { devices } = await this.networkService.listDevices();
 
@@ -125,7 +136,11 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
         rotate: 0,
         numPoints: 6
       },
-      image: { url: '../../../../assets/css/patterns/broker.png' }
+      image: { url: '../../../../assets/css/patterns/broker.png' },
+      info: {
+        name: 'Broker',
+        type: 'MQTT broker'
+      }
     };
     graph.nodes.push(gateway);
 
@@ -167,6 +182,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
     this.sigma.refresh();
   }
 
+  /* fetch device data */
   async fetchDeviceData(device: any) {
     const { data } = await this.networkService.getDeviceData(device.info.id);
 
@@ -174,20 +190,22 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       id: device.info.id,
       label: device.label,
       name: device.info.name,
-      data
+      data: Object.keys(data).length > 0 ? data : null // mudar aqui
     };
   }
 
+  /* Turn on/off device */
   async changeDeviceState(state: boolean) {
     const { message } = await this.networkService.changeDeviceState(this.actionedDevice.id, state ? 'on' : 'off');
     this.notifier.showSuccess('Great!', message);
   }
 
-  stopDeviceDataRequests() {
+  /* stop device data requests and reset camera */
+  resetSettings() {
     clearInterval(this.deviceDataIntervalId);
 
     sigma.misc.animation.camera(this.sigma.cameras[0],
-      { x: 0, y: 0, ratio: 1.1 },
+      { x: 0, y: 0, ratio: 1.05 },
       { duration: 500 }
     );
   }

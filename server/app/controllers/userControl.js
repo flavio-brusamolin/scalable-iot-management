@@ -1,9 +1,11 @@
+/* imports */
 const userDAO = require('../models/userDAO');
 
 const crypto = require('../utils/crypto');
 
 const auth = require('../middlewares/auth');
 
+/* create new user */
 const createUser = async (req, res) => {
     const user = req.body;
     if (user.password) user.password = crypto.encrypt(user.password);
@@ -15,6 +17,7 @@ const createUser = async (req, res) => {
     }
 }
 
+/* list users */
 const listUsers = async (req, res) => {
     try {
         const users = await userDAO.listUsers();
@@ -24,6 +27,7 @@ const listUsers = async (req, res) => {
     }
 }
 
+/* update user data */
 const updateUser = async (req, res) => {
     const id = req.params.id;
     const newUser = req.body;
@@ -36,6 +40,7 @@ const updateUser = async (req, res) => {
     }
 }
 
+/* remove user */
 const removeUser = async (req, res) => {
     const id = req.params.id;
     try {
@@ -46,6 +51,7 @@ const removeUser = async (req, res) => {
     }
 }
 
+/* authenticate user by username and password */
 const authenticateUser = async (req, res) => {
     const { user, password } = req.body;
     const encryptedPassword = password ? crypto.encrypt(password) : password;
@@ -58,6 +64,7 @@ const authenticateUser = async (req, res) => {
     }
 }
 
+/* exports */
 module.exports = {
     createUser,
     listUsers,

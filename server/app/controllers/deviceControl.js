@@ -2,6 +2,7 @@ const deviceDAO = require('../models/deviceDAO');
 
 const mqttManagement = require('../mqtt/mqttManagement');
 
+/* create new device */
 const createDevice = async (req, res) => {
     const device = req.body;
     try {
@@ -13,6 +14,7 @@ const createDevice = async (req, res) => {
     }
 }
 
+/* list devices */
 const listDevices = async (req, res) => {
     try {
         const devices = await deviceDAO.listDevices();
@@ -22,6 +24,7 @@ const listDevices = async (req, res) => {
     }
 }
 
+/* turn on/off device */
 const changeDeviceState = async (req, res) => {
     const id = req.params.id;
     const action = req.query.action;
@@ -32,12 +35,13 @@ const changeDeviceState = async (req, res) => {
         action === 'on' ?
             await mqttManagement.changeDeviceState(topic, turnOn) :
             await mqttManagement.changeDeviceState(topic, turnOff);
-        res.status(200).json({ success: true, message: 'Successfully taken action' });
+        res.status(200).json({ success: true, message: 'Successfully completed action' });
     } catch (error) {
         res.status(400).json({ success: false, message: error });
     }
 }
 
+/* fetch device data */
 const getDeviceData = async (req, res) => {
     const id = req.params.id;
     try {
@@ -49,6 +53,7 @@ const getDeviceData = async (req, res) => {
     }
 }
 
+/* exports */
 module.exports = {
     createDevice,
     listDevices,

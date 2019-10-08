@@ -23,7 +23,7 @@
                   <td>{{user.name}}</td>
                   <td>{{user.user}}</td>
                   <td>{{user.role == 'admin' ? 'Administrator' : 'User'}}</td>
-                  <td class="text-right">
+                  <td class="text-right" style="white-space: nowrap;">
                     <button class="btn btn-outline btn-success btn-xs m-r" type="button" (click)="prepareEdition(user)"
                       data-toggle="modal" data-target="#editModal">
                       <i class="fa fa-pencil"></i>

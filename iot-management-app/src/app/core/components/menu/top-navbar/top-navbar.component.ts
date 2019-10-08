@@ -18,11 +18,13 @@ export class TopNavbarComponent implements OnInit {
   ngOnInit() {
   }
 
+  /* toggle navigation menu */
   toggleNavigation(): void {
     $('body').toggleClass('mini-navbar');
     smoothlyMenu();
   }
 
+  /* logout */
   logout(): void {
     this.authService.logout();
   }

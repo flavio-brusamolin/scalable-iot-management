@@ -1,15 +1,18 @@
+/* imports */
 const mqtt = require('async-mqtt');
 
+/* MQTT broker options */
 const options = {
     port: 16838,
-    clientId: 'krpgdhec' + Math.random().toString(16).substr(2, 8),
     username: 'krpgdhec',
     password: '1Us4LQZgRFWl'
 }
 
+/* MQTT broker connection */
 const client = mqtt.connect('mqtt://soldier.cloudmqtt.com', options);
-client.setMaxListeners(10000);
+client.setMaxListeners(100000);
 
+/* verify device connection through messages in topic */
 const verifyDeviceConnection = topic => {
     return new Promise((resolve, reject) => {
         client.subscribe(topic, err => reject(err));
@@ -21,6 +24,7 @@ const verifyDeviceConnection = topic => {
     });
 }
 
+/* send message on topic to turn on/off device */
 const changeDeviceState = (topic, action) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -32,14 +36,32 @@ const changeDeviceState = (topic, action) => {
     });
 }
 
+/* fetch device data on topic */
 const getDeviceData = topic => {
     return new Promise((resolve, reject) => {
         client.subscribe(topic, err => reject(err));
-        client.on('message', (topic, message) => resolve(JSON.parse(message)));
+        client.on('message', (receivedTopic, message) => {
+            if (receivedTopic === topic) {
+                if (isJSON(message))
+                    resolve(JSON.parse(message));
+                else
+                    resolve({}); // mudar aqui
+            }
+        });
         setTimeout(() => reject('Unable to fetch device data'), 3000);
     });
+
+    function isJSON(string) {
+        try {
+            JSON.parse(string)
+        } catch (error) {
+            return false;
+        }
+        return true;
+    }
 }
 
+/* exports */
 module.exports = {
     verifyDeviceConnection,
     changeDeviceState,

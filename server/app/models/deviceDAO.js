@@ -1,7 +1,9 @@
+/* imports */
 const Device = require('../schemas/deviceSchema');
 
 const handleError = require('../utils/handleError');
 
+/* create new device */
 const createDevice = device => {
     return new Promise((resolve, reject) => {
         new Device(device).save()
@@ -10,6 +12,7 @@ const createDevice = device => {
     });
 }
 
+/* list devices */
 const listDevices = () => {
     return new Promise((resolve, reject) => {
         Device.find().select('-topic -turnOn -turnOff -data')
@@ -18,6 +21,7 @@ const listDevices = () => {
     });
 }
 
+/* get device options by id */
 const getDeviceOptions = id => {
     return new Promise((resolve, reject) => {
         Device.findById(id).select('-name -type')
@@ -30,6 +34,7 @@ const getDeviceOptions = id => {
     });
 }
 
+/* list topics of all devices */
 const listAllTopics = () => {
     return new Promise((resolve, reject) => {
         Device.find().select('-name -type -isConnected -turnOn -turnOff -data')
@@ -38,6 +43,7 @@ const listAllTopics = () => {
     });
 }
 
+/* update device connection status */
 const updateDeviceConnection = (id, status) => {
     return new Promise((resolve, reject) => {
         Device.findByIdAndUpdate(id, { isConnected: status })
@@ -46,6 +52,7 @@ const updateDeviceConnection = (id, status) => {
     });
 }
 
+/* exports */
 module.exports = {
     createDevice,
     listDevices,

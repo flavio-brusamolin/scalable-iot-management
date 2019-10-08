@@ -15,6 +15,7 @@
                     off.</small>
             </div>
             <div class="modal-body" style="overflow: auto; max-height: 250px;">
+                <label *ngIf="!actionedDevice.data">This device provide informations in invalid format.</label>
                 <div class="row">
                     <div class="col-lg-4 col-sm-6"
                         *ngFor="let information of actionedDevice.data | keyvalue, let i = index">
@@ -30,11 +31,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal"
-                    (click)="stopDeviceDataRequests()">Close</button>
+                    (click)="resetSettings()">Close</button>
             </div>
         </div>
     </div>

@@ -29,11 +29,13 @@ export class UserComponent implements OnInit {
     this.listUsers();
   }
 
+  /* initializate all forms */
   initializateForms() {
     this.addForm = this.formTemplate();
     this.editForm = this.formTemplate();
   }
 
+  /* return basic user form template */
   formTemplate() {
     return this.formBuilder.group({
       name: this.formBuilder.control('', [Validators.required]),
@@ -42,6 +44,7 @@ export class UserComponent implements OnInit {
     });
   }
 
+  /* configurate iCheck settings */
   configurateCheck() {
     $('.i-checks').iCheck({
       checkboxClass: 'icheckbox_square-green',
@@ -53,11 +56,13 @@ export class UserComponent implements OnInit {
     });
   }
 
+  /* fetch system users */
   async listUsers() {
     const { users } = await this.userService.listUsers();
     this.users = users;
   }
 
+  /* store new user */
   async storeUser(user: any) {
     user.role = this.userRole;
     const { message } = await this.userService.storeUser(user);
@@ -67,6 +72,7 @@ export class UserComponent implements OnInit {
     this.userRole = 'user';
   }
 
+  /* pre configurations before edition */
   prepareEdition(user: any) {
     this.editForm.controls.name.setValue(user.name);
     this.editForm.controls.user.setValue(user.user);
@@ -75,6 +81,7 @@ export class UserComponent implements OnInit {
     this.actionedUser = user;
   }
 
+  /* update user data */
   async updateUser(user: any) {
     user.role = this.userRole;
     const { message } = await this.userService.updateUser(user, this.actionedUser._id);
@@ -82,11 +89,13 @@ export class UserComponent implements OnInit {
     this.userRole = 'user';
   }
 
+  /* remove user */
   async removeUser() {
     const { message } = await this.userService.removeUser(this.actionedUser._id);
     this.afterRequest(message, '#removeModal');
   }
 
+  /* operations to do after request */
   afterRequest(message: string, modalId: string) {
     this.notifier.showSuccess('Great!', message);
     $(modalId).modal('hide');

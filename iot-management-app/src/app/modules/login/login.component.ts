@@ -21,12 +21,18 @@ export class LoginComponent implements OnInit {
     private notifier: NotificationService) { }
 
   ngOnInit() {
+    this.initializateForms();
+  }
+
+  /* initialize login form */
+  initializateForms() {
     this.loginForm = this.formBuilder.group({
       user: this.formBuilder.control('', [Validators.required]),
       password: this.formBuilder.control('', [Validators.required])
     });
   }
 
+  /* login */
   async login(user: any) {
     const response = await this.authService.login(user);
     localStorage.setItem('currentUserToken', response.token);

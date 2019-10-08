@@ -11,6 +11,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
 
     constructor(private router: Router) { }
 
+    /* intercept requests and handle server errors */
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
             retry(1),

@@ -1,3 +1,4 @@
+/* global error handler */
 const handleError = unreadableError => {
     let errorMessage = '';
     const errors = unreadableError.split(',');
@@ -20,4 +21,5 @@ const handleError = unreadableError => {
     return errorMessage;
 }
 
+/* exports */
 module.exports = handleError;
