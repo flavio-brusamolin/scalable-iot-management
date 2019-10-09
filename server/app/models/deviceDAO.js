@@ -15,7 +15,7 @@ const createDevice = device => {
 /* list devices */
 const listDevices = () => {
     return new Promise((resolve, reject) => {
-        Device.find().select('-topic -turnOn -turnOff -data')
+        Device.find().select('-subscriptionTopic -publishingTopic -turnOn -turnOff -data')
             .then(devices => resolve(devices))
             .catch(err => reject(handleError(err.message)))
     });
@@ -34,10 +34,10 @@ const getDeviceOptions = id => {
     });
 }
 
-/* list topics of all devices */
-const listAllTopics = () => {
+/* list publishing topics of all devices */
+const listAllPublishingTopics = () => {
     return new Promise((resolve, reject) => {
-        Device.find().select('-name -type -isConnected -turnOn -turnOff -data')
+        Device.find().select('-name -type -isConnected -turnOn -turnOff -data -subscriptionTopic')
             .then(topics => resolve(topics))
             .catch(err => reject(handleError(err.message)))
     });
@@ -57,6 +57,6 @@ module.exports = {
     createDevice,
     listDevices,
     getDeviceOptions,
-    listAllTopics,
+    listAllPublishingTopics,
     updateDeviceConnection
 }

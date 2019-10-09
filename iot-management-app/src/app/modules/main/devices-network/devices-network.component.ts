@@ -190,7 +190,7 @@ export class DevicesNetworkComponent implements OnInit, OnDestroy {
       id: device.info.id,
       label: device.label,
       name: device.info.name,
-      data: Object.keys(data).length > 0 ? data : null // mudar aqui
+      data: Object.keys(data).length > 0 ? data : null
     };
   }
 

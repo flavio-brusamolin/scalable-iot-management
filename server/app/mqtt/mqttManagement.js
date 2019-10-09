@@ -45,7 +45,7 @@ const getDeviceData = topic => {
                 if (isJSON(message))
                     resolve(JSON.parse(message));
                 else
-                    resolve({}); // mudar aqui
+                    resolve({});
             }
         });
         setTimeout(() => reject('Unable to fetch device data'), 3000);

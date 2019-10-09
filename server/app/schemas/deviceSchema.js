@@ -20,9 +20,14 @@ const deviceSchema = new Schema({
         type: Boolean,
         required: [true, 'Device connection status is required']
     },
-    topic: {
+    subscriptionTopic: {
         type: String,
-        required: [true, 'Device topic required'],
+        required: [true, 'Device subscription topic required'],
+        unique: true
+    },
+    publishingTopic: {
+        type: String,
+        required: [true, 'Device publishing topic required'],
         unique: true
     },
     turnOn: {
