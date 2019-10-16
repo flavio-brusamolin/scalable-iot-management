@@ -19,5 +19,4 @@ const verifyDevicesConnection = async () => {
     }
 }
 
-/* exports */
 verifyDevicesConnection();
